@@ -1,37 +1,31 @@
 package com.papaguycodes.exifeditor
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.papaguycodes.exifeditor.databinding.ItemExifTagBinding
 import com.papaguycodes.exifeditor.models.ExifData
 
-class ExifAdapter(private val exifDataList: MutableList<ExifData>) :
+class ExifAdapter(private val exifDataList: List<ExifData>) :
     RecyclerView.Adapter<ExifAdapter.ExifViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExifViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_exif_tag, parent, false)
-        return ExifViewHolder(view)
+        val binding = ItemExifTagBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ExifViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ExifViewHolder, position: Int) {
-        val exifData = exifDataList[position]
-        holder.tagName.text = exifData.tagName
-        holder.tagValue.setText(exifData.tagValue)
+        holder.bind(exifDataList[position])
+    }
 
-        holder.tagValue.addTextChangedListener {
-            exifDataList[position].tagValue = it.toString()
+    override fun getItemCount(): Int = exifDataList.size
+
+    inner class ExifViewHolder(private val binding: ItemExifTagBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(exifData: ExifData) {
+            binding.exifData = exifData
+            binding.executePendingBindings()
         }
-    }
-
-    override fun getItemCount(): Int {
-        return exifDataList.size
-    }
-
-    class ExifViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tagName: TextView = view.findViewById(R.id.tagName)
-        val tagValue: EditText = view.findViewById(R.id.tagValue)
     }
 }
