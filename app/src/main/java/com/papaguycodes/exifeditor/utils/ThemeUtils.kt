@@ -2,7 +2,7 @@ package com.papaguycodes.exifeditor.utils
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.yourapp.R
+import com.papaguycodes.exifeditor.R
 
 object ThemeUtils {
 
