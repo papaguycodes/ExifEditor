@@ -2,59 +2,71 @@
 package com.papaguycodes.exifeditor.utils
 
 import android.media.ExifInterface
+import com.papaguycodes.exifeditor.models.ExifData
+import java.io.File
 
 object ExifUtils {
 
-    fun getExifTags(exif: ExifInterface): Map<String, String> {
-        val tags = mapOf(
-            "Date & Time" to ExifInterface.TAG_DATETIME,
-            "Date & Time Original" to ExifInterface.TAG_DATETIME_ORIGINAL,
-            "Date & Time Digitized" to ExifInterface.TAG_DATETIME_DIGITIZED,
-            "GPS Latitude" to ExifInterface.TAG_GPS_LATITUDE,
-            "GPS Longitude" to ExifInterface.TAG_GPS_LONGITUDE,
-            "GPS Altitude" to ExifInterface.TAG_GPS_ALTITUDE,
-            "GPS Processing Method" to ExifInterface.TAG_GPS_PROCESSING_METHOD,
-            "GPS Datestamp" to ExifInterface.TAG_GPS_DATESTAMP,
-            "Image Width" to ExifInterface.TAG_IMAGE_WIDTH,
-            "Image Height" to ExifInterface.TAG_IMAGE_LENGTH,
-            "Orientation" to ExifInterface.TAG_ORIENTATION,
-            "Make" to ExifInterface.TAG_MAKE,
-            "Model" to ExifInterface.TAG_MODEL,
-            "Software" to ExifInterface.TAG_SOFTWARE,
-            "Flash" to ExifInterface.TAG_FLASH,
-            "Focal Length" to ExifInterface.TAG_FOCAL_LENGTH,
-            "Focal Length in 35mm Film" to ExifInterface.TAG_FOCAL_LENGTH_IN_35MM_FILM,
-            "Exposure Time" to ExifInterface.TAG_EXPOSURE_TIME,
-            "Exposure Bias Value" to ExifInterface.TAG_EXPOSURE_BIAS_VALUE,
-            "Aperture Value" to ExifInterface.TAG_APERTURE_VALUE,
-            "Max Aperture Value" to ExifInterface.TAG_MAX_APERTURE_VALUE,
-            "ISO Speed Ratings" to ExifInterface.TAG_ISO_SPEED_RATINGS,
-            "Shutter Speed Value" to ExifInterface.TAG_SHUTTER_SPEED_VALUE,
-            "White Balance" to ExifInterface.TAG_WHITE_BALANCE,
-            "Exposure Mode" to ExifInterface.TAG_EXPOSURE_MODE,
-            "Exposure Program" to ExifInterface.TAG_EXPOSURE_PROGRAM,
-            "Scene Capture Type" to ExifInterface.TAG_SCENE_CAPTURE_TYPE,
-            "Contrast" to ExifInterface.TAG_CONTRAST,
-            "Saturation" to ExifInterface.TAG_SATURATION,
-            "Sharpness" to ExifInterface.TAG_SHARPNESS,
-            "Brightness Value" to ExifInterface.TAG_BRIGHTNESS_VALUE,
-            "Metering Mode" to ExifInterface.TAG_METERING_MODE,
-            "Light Source" to ExifInterface.TAG_LIGHT_SOURCE,
-            "Digital Zoom Ratio" to ExifInterface.TAG_DIGITAL_ZOOM_RATIO,
-            "Gain Control" to ExifInterface.TAG_GAIN_CONTROL,
-            "Subject Distance Range" to ExifInterface.TAG_SUBJECT_DISTANCE_RANGE,
-            "File Source" to ExifInterface.TAG_FILE_SOURCE
+    fun getExifDataFromFile(filePath: String): List<ExifData> {
+        val exifInterface = ExifInterface(File(filePath))
+        val exifDataList = mutableListOf<ExifData>()
+
+        // List of EXIF tags to be displayed
+        val tags = listOf(
+            ExifInterface.TAG_DATETIME,
+            ExifInterface.TAG_GPS_LATITUDE,
+            ExifInterface.TAG_GPS_LONGITUDE,
+            ExifInterface.TAG_MAKE,
+            ExifInterface.TAG_MODEL,
+            ExifInterface.TAG_IMAGE_WIDTH,
+            ExifInterface.TAG_IMAGE_LENGTH,
+            ExifInterface.TAG_EXPOSURE_TIME,
+            ExifInterface.TAG_F_NUMBER,
+            ExifInterface.TAG_ISO_SPEED_RATINGS,
+            ExifInterface.TAG_FLASH,
+            ExifInterface.TAG_FOCAL_LENGTH,
+            ExifInterface.TAG_WHITE_BALANCE,
+            ExifInterface.TAG_GPS_ALTITUDE,
+            ExifInterface.TAG_GPS_PROCESSING_METHOD,
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.TAG_APERTURE_VALUE,
+            ExifInterface.TAG_BRIGHTNESS_VALUE,
+            ExifInterface.TAG_GPS_TIMESTAMP,
+            ExifInterface.TAG_SUBSEC_TIME,
+            ExifInterface.TAG_SUBSEC_TIME_DIGITIZED,
+            ExifInterface.TAG_SUBSEC_TIME_ORIGINAL,
+            ExifInterface.TAG_SHUTTER_SPEED_VALUE,
+            ExifInterface.TAG_SUBJECT_DISTANCE,
+            ExifInterface.TAG_SUBJECT_AREA,
+            ExifInterface.TAG_GPS_SPEED,
+            ExifInterface.TAG_GPS_SPEED_REF,
+            ExifInterface.TAG_IMAGE_UNIQUE_ID,
+            ExifInterface.TAG_SCENE_TYPE,
+            ExifInterface.TAG_COMPRESSION,
+            ExifInterface.TAG_RESOLUTION_UNIT,
+            ExifInterface.TAG_SOFTWARE,
+            ExifInterface.TAG_DATE_TIME_DIGITIZED,
+            ExifInterface.TAG_DATE_TIME_ORIGINAL,
+            ExifInterface.TAG_METERING_MODE,
+            ExifInterface.TAG_LIGHT_SOURCE
         )
 
-        val exifData = mutableMapOf<String, String>()
-
-        for ((key, tag) in tags) {
-            val value = exif.getAttribute(tag)
-            if (value != null) {
-                exifData[key] = value
+        // Retrieve EXIF data
+        tags.forEach { tag ->
+            val value = exifInterface.getAttribute(tag)
+            if (!value.isNullOrEmpty()) {
+                exifDataList.add(ExifData(tag, value))
             }
         }
 
-        return exifData
+        return exifDataList
+    }
+
+    fun setExifDataToFile(filePath: String, exifData: List<ExifData>) {
+        val exifInterface = ExifInterface(File(filePath))
+        exifData.forEach { data ->
+            exifInterface.setAttribute(data.tag, data.value)
+        }
+        exifInterface.saveAttributes()
     }
 }
