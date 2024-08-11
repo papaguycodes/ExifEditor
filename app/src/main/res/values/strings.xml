@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Exif Editor</string>
+    <string name="edit_exif">Edit EXIF</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="welcome_message">Welcome to Image and Video Exif Editor</string>
+    <string name="footer_text">Github: PaPaGuyCodes</string>
+</resources>
