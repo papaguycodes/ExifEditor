@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="exifData"
+            type="com.papaguycodes.exifeditor.models.ExifData" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Tag Label -->
+        <TextView
+            android:id="@+id/tagLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{exifData.tag}"
+            android:textAppearance="?attr/textAppearanceBody1" />
+
+        <!-- Tag Value -->
+        <EditText
+            android:id="@+id/tagValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{exifData.value}"
+            android:hint="Enter Value"
+            android:background="@drawable/rounded_edit_text"
+            android:padding="8dp"
+            android:textAppearance="?attr/textAppearanceBody2" />
+    </LinearLayout>
+</layout>
