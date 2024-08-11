@@ -12,44 +12,41 @@ object ExifUtils {
         val exifDataList = mutableListOf<ExifData>()
 
         // List of EXIF tags to be displayed
-        val tags = listOf(
-            ExifInterface.TAG_DATETIME,
-            ExifInterface.TAG_GPS_LATITUDE,
-            ExifInterface.TAG_GPS_LONGITUDE,
-            ExifInterface.TAG_MAKE,
-            ExifInterface.TAG_MODEL,
-            ExifInterface.TAG_IMAGE_WIDTH,
-            ExifInterface.TAG_IMAGE_LENGTH,
-            ExifInterface.TAG_EXPOSURE_TIME,
-            ExifInterface.TAG_F_NUMBER,
-            ExifInterface.TAG_ISO_SPEED_RATINGS,
-            ExifInterface.TAG_FLASH,
-            ExifInterface.TAG_FOCAL_LENGTH,
-            ExifInterface.TAG_WHITE_BALANCE,
-            ExifInterface.TAG_GPS_ALTITUDE,
-            ExifInterface.TAG_GPS_PROCESSING_METHOD,
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.TAG_APERTURE_VALUE,
-            ExifInterface.TAG_BRIGHTNESS_VALUE,
-            ExifInterface.TAG_GPS_TIMESTAMP,
-            ExifInterface.TAG_SUBSEC_TIME,
-            ExifInterface.TAG_SUBSEC_TIME_DIGITIZED,
-            ExifInterface.TAG_SUBSEC_TIME_ORIGINAL,
-            ExifInterface.TAG_SHUTTER_SPEED_VALUE,
-            ExifInterface.TAG_SUBJECT_DISTANCE,
-            ExifInterface.TAG_SUBJECT_AREA,
-            ExifInterface.TAG_GPS_SPEED,
-            ExifInterface.TAG_GPS_SPEED_REF,
-            ExifInterface.TAG_IMAGE_UNIQUE_ID,
-            ExifInterface.TAG_SCENE_TYPE,
-            ExifInterface.TAG_COMPRESSION,
-            ExifInterface.TAG_RESOLUTION_UNIT,
-            ExifInterface.TAG_SOFTWARE,
-            ExifInterface.TAG_DATE_TIME_DIGITIZED,
-            ExifInterface.TAG_DATE_TIME_ORIGINAL,
-            ExifInterface.TAG_METERING_MODE,
-            ExifInterface.TAG_LIGHT_SOURCE
-        )
+        val exifTags = mapOf(
+        ExifInterface.TAG_DATETIME to "Date and Time",
+        ExifInterface.TAG_MAKE to "Camera Make",
+        ExifInterface.TAG_MODEL to "Camera Model",
+        ExifInterface.TAG_FOCUS_DISTANCE to "Focus Distance",
+        ExifInterface.TAG_ISO to "ISO",
+        ExifInterface.TAG_FNUMBER to "F-Number",
+        ExifInterface.TAG_FLASH to "Flash",
+        ExifInterface.TAG_WHITE_BALANCE to "White Balance",
+        ExifInterface.TAG_GPS_LATITUDE to "GPS Latitude",
+        ExifInterface.TAG_GPS_LONGITUDE to "GPS Longitude",
+        ExifInterface.TAG_GPS_ALTITUDE to "GPS Altitude",
+        ExifInterface.TAG_GPS_DATESTAMP to "GPS Date Stamp",
+        ExifInterface.TAG_GPS_TIMESTAMP to "GPS Time Stamp",
+        ExifInterface.TAG_APERTURE to "Aperture",
+        ExifInterface.TAG_SHUTTER_SPEED to "Shutter Speed",
+        ExifInterface.TAG_BRIGHTNESS_VALUE to "Brightness Value",
+        ExifInterface.TAG_CONTRAST to "Contrast",
+        ExifInterface.TAG_SATURATION to "Saturation",
+        ExifInterface.TAG_SHARPNESS to "Sharpness",
+        ExifInterface.TAG_METERING_MODE to "Metering Mode",
+        ExifInterface.TAG_SCENE_TYPE to "Scene Type",
+        ExifInterface.TAG_LENS_MAKE to "Lens Make",
+        ExifInterface.TAG_LENS_MODEL to "Lens Model",
+        ExifInterface.TAG_EXPOSURE_MODE to "Exposure Mode",
+        ExifInterface.TAG_COLOR_SPACE to "Color Space",
+        ExifInterface.TAG_IMAGE_UNIQUE_ID to "Image Unique ID",
+        ExifInterface.TAG_OWNER_NAME to "Owner Name",
+        ExifInterface.TAG_CAMERA_SERIAL_NUMBER to "Camera Serial Number",
+        ExifInterface.TAG_SOFTWARE to "Software"
+    )
+
+    fun getTagDescription(tag: String): String? {
+        return exifTags[tag]
+    }
 
         // Retrieve EXIF data
         tags.forEach { tag ->
